@@ -19,9 +19,7 @@ const sgSendWelcome = (email, name) => {
         if (error) {
             console.log('Error response received');
         }
-        console.log(response.statusCode);
-        console.log(response.headers);
-        console.log(response.body);
+        console.log(response);
     });
 }
 
@@ -40,9 +38,7 @@ const sgSendCancellation = (email, name) => {
         if (error) {
             console.log('Error response received');
         }
-        console.log(response.statusCode);
-        console.log(response.headers);
-        console.log(response.body);
+        console.log(response);
     });
 }
 
