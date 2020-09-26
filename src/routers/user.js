@@ -8,11 +8,11 @@ const { sgSendWelcome } = require('../email/account')
 const router = new express.Router()
 
 router.post('/users', async (req, res) => {
+    const user = new User(req.body)
     try {
-        const user = new User(req.body)
         await user.save()
-        const token = await user.generateAuthToken() // method is defined in side of user instance
         sgSendWelcome(user.email, user.name)
+        const token = await user.generateAuthToken() // method is defined in side of user instance
         res.status(201).send({ user, token })
     } catch (err) {
         res.status(400).send(err)

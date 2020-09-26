@@ -1,7 +1,6 @@
 const express = require('express')
 const Task = require('../models/task')
 const auth = require('../middleware/auth')
-const { update } = require('../models/task')
 const router = new express.Router()
 
 router.post('/tasks', auth, (req, res) => {
@@ -13,8 +12,10 @@ router.post('/tasks', auth, (req, res) => {
     })
 })
 
-// URL localhost:3000/tasks?completed=true
-// URL localhost:3000/tasks?sortBy=completed:desc
+
+// GET /tasks?completed=true
+// GET /tasks?limit=10&skip=20
+// GET /tasks?sortBy=createdAt:desc
 router.get('/tasks', auth, async (req, res) => {
     const match = {}
     const sort = {}
@@ -41,16 +42,7 @@ router.get('/tasks', auth, async (req, res) => {
         }).execPopulate()
         res.send(req.user.tasks)
     } catch (e) {
-        res.status(400).send(e)
-    }
-})
-
-router.get('/tasks/mine', auth, async (req, res) => {
-    try {
-        await req.user.populate('tasks').execPopulate()
-        res.send(req.user.tasks)
-    } catch (err) {
-        res.status(500).send(err)
+        res.status(500).send(e)
     }
 })
 
@@ -83,8 +75,8 @@ router.delete('/tasks/:id', auth, async (req, res) => {
             res.status(404).send()
         }
         res.send(task)
-    } catch (err) {
-        res.status(400).send(err)
+    } catch (e) {
+        res.status(500).send()
     }
 })
 

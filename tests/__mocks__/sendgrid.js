@@ -3,7 +3,7 @@ exports = module.exports = function () {
     const emptyRequest = () => { }
 
     const API = (data, cb) => {
-        cb(null, { code: 200, headers: 'email header', body: 'email body' })
+        cb(null, { code: 200, headers: 'unit testing', body: 'unit testing' })
     }
 
     return { API, emptyRequest }
